@@ -1,8 +1,8 @@
-package template.model;
+package template.dto;
 import lombok.Data;
 
 @Data
-public class TemplateLoader {
+public class TemplateLoaderDTO {
     private String templateId;
     private String template;
     private String[] recipients;
