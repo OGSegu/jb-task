@@ -3,10 +3,9 @@ package template.entity;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Table(name = "templates")
 @Data
@@ -18,4 +17,11 @@ public class TemplateEntity {
     private String templateId;
 
     private String template;
+
+    @ElementCollection
+    @CollectionTable(name = "templates_recipients",
+            joinColumns = @JoinColumn(name = "template_id")
+    )
+    @Column(name = "recipient")
+    private final List<String> recipients = new ArrayList<>();
 }
