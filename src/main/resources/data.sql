@@ -1,16 +1,16 @@
-CREATE TABLE templates (
+CREATE TABLE IF NOT EXISTS templates (
     template_id VARCHAR PRIMARY KEY,
-    template VARCHAR
+    template VARCHAR NOT NULL
 );
 
-CREATE TABLE recipients (
+CREATE TABLE IF NOT EXISTS templates_recipients (
     template_id VARCHAR,
-    recipient VARCHAR,
-    PRIMARY KEY (template_id, recipient)
+    recipient_id VARCHAR,
+    PRIMARY KEY (template_id, recipient_id)
 );
 
-CREATE TABLE variables (
+CREATE TABLE IF NOT EXISTS templates_variables (
   template_id VARCHAR,
-  recipient VARCHAR,
-  PRIMARY KEY (template_id, recipient)
+  variable VARCHAR,
+  PRIMARY KEY (template_id, variable)
 );
