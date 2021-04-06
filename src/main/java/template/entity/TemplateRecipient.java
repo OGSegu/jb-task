@@ -8,9 +8,9 @@ import java.io.Serializable;
 
 @Data
 @Entity
-@IdClass(TemplateRecipientsEntity.class)
+@IdClass(TemplateRecipient.class)
 @Table(name = "templates_recipients")
-public class TemplateRecipientsEntity implements Serializable {
+public class TemplateRecipient implements Serializable {
 
     @Id
     @Column(name = "template_id")

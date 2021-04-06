@@ -12,5 +12,6 @@ CREATE TABLE IF NOT EXISTS templates_recipients (
 CREATE TABLE IF NOT EXISTS templates_variables (
   template_id VARCHAR,
   variable VARCHAR,
+  variable_value VARCHAR,
   PRIMARY KEY (template_id, variable)
 );

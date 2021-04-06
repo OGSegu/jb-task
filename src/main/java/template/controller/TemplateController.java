@@ -7,10 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import template.dto.TemplateDTO;
+import template.dto.TemplateLoaderDTO;
+import template.dto.TemplateSenderDTO;
 import template.entity.TemplateEntity;
 import template.mapper.TemplateMapper;
-import template.service.TemplateService;
+import template.service.TemplateLoaderService;
+import template.service.TemplateSenderService;
 
 @Slf4j
 @Data
@@ -19,12 +21,18 @@ import template.service.TemplateService;
 @RequestMapping("/api/template")
 public class TemplateController {
 
-    private TemplateService templateService;
+    private TemplateLoaderService templateLoaderService;
+    private TemplateSenderService templateSenderService;
 
     @PostMapping("/load")
-    public void load(@RequestBody TemplateDTO template) {
+    public void load(@RequestBody TemplateLoaderDTO template) {
         TemplateEntity templateEntity = TemplateMapper.INSTANCE.toEntity(template);
-        templateService.save(templateEntity);
+        templateLoaderService.save(templateEntity);
+    }
+
+    @PostMapping("/send")
+    public void sendMessage(@RequestBody TemplateSenderDTO templateSender) {
+        templateSenderService.save(templateSender);
     }
 
 }

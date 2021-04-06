@@ -1,9 +1,12 @@
 package template.dto;
+
 import lombok.Data;
 
+import java.util.List;
+
 @Data
-public class TemplateDTO {
+public class TemplateLoaderDTO {
     private String templateId;
     private String template;
-    private String[] recipients;
+    private List<String> recipients;
 }
