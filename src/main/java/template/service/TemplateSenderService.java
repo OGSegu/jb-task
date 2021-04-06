@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import template.dto.TemplateSenderDTO;
 import template.entity.TemplateEntity;
 import template.entity.TemplateVariable;
@@ -24,17 +25,14 @@ public class TemplateSenderService {
 
     private TemplateRepository templateRepo;
 
-    public void save(TemplateSenderDTO templateSender) {
-
+    public void save(TemplateSenderDTO templateSender) throws TemplateNotFoundException {
         String id = templateSender.getTemplateId();
         TemplateEntity templateEntity = getTemplateEntityById(id);
-
         addVariables(id, templateEntity.getVariables(), templateSender.getVariables());
-
         templateRepo.save(templateEntity);
     }
 
-    private TemplateEntity getTemplateEntityById(String id) {
+    private TemplateEntity getTemplateEntityById(String id) throws TemplateNotFoundException {
         return templateRepo.findById(id).orElseThrow(TemplateNotFoundException::new);
     }
 
@@ -44,5 +42,8 @@ public class TemplateSenderService {
         }
     }
 
-
+    @ExceptionHandler(TemplateNotFoundException.class)
+    public String templateError() {
+        return "Error";
+    }
 }
