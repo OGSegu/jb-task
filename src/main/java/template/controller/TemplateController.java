@@ -6,16 +6,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import template.dto.TemplateLoaderDTO;
+import org.springframework.web.bind.annotation.*;
+import template.dto.TemplateDTO;
 import template.dto.TemplateSenderDTO;
-import template.entity.TemplateEntity;
+import template.entity.Template;
 import template.exception.TemplateNotFoundException;
 import template.mapper.TemplateMapper;
-import template.service.TemplateLoaderService;
+import template.service.TemplateService;
 import template.service.TemplateSenderService;
 
 @Slf4j
@@ -25,18 +22,18 @@ import template.service.TemplateSenderService;
 @RequestMapping("/api/template")
 public class TemplateController {
 
-    private TemplateLoaderService templateLoaderService;
+    private TemplateService templateService;
     private TemplateSenderService templateSenderService;
 
     @PostMapping("/load")
-    public void load(@RequestBody TemplateLoaderDTO template) {
-        TemplateEntity templateEntity = TemplateMapper.INSTANCE.toEntity(template);
-        templateLoaderService.save(templateEntity);
+    public void load(@RequestBody TemplateDTO template) {
+        Template templateEntity = TemplateMapper.INSTANCE.toEntity(template);
+        templateService.save(templateEntity);
     }
 
     @PostMapping("/send")
     public void sendMessage(@RequestBody TemplateSenderDTO templateSender) throws TemplateNotFoundException {
-        templateSenderService.save(templateSender);
+        log.info(templateSenderService.save(templateSender));
     }
 
     @ExceptionHandler(TemplateNotFoundException.class)

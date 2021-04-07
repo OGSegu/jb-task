@@ -7,14 +7,16 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "templates")
-public class TemplateEntity {
+public class Template {
 
     @Id
     @Column(name = "template_id")
@@ -30,7 +32,12 @@ public class TemplateEntity {
     @Column(name = "recipient")
     private final List<String> recipients = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "template_id")
-    private final List<TemplateVariable> variables = new ArrayList<>();
+    @ElementCollection
+    @CollectionTable(
+            name = "templates_variables",
+            joinColumns = @JoinColumn(name = "template_id")
+    )
+    @MapKeyColumn(name = "variable")
+    @Column(name = "variable_value")
+    private final Map<String, String> variables = new HashMap<>();
 }

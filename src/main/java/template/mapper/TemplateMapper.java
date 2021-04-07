@@ -2,16 +2,16 @@ package template.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
-import template.dto.TemplateLoaderDTO;
-import template.entity.TemplateEntity;
+import template.dto.TemplateDTO;
+import template.entity.Template;
 
 @Mapper
 public interface TemplateMapper {
 
     TemplateMapper INSTANCE = Mappers.getMapper(TemplateMapper.class);
 
-    TemplateLoaderDTO toDTO(TemplateEntity templateEntity);
+    TemplateDTO toDTO(Template template);
 
-    TemplateEntity toEntity(TemplateLoaderDTO templateLoaderDTO);
+    Template toEntity(TemplateDTO templateDTO);
 
 }
