@@ -22,7 +22,7 @@ public class Template {
     @Column(name = "template_id")
     private String templateId;
 
-    private String template;
+    private String templateMsg;
 
     @ElementCollection
     @CollectionTable(

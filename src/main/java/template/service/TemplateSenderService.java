@@ -48,7 +48,7 @@ public class TemplateSenderService {
 
     private String getTemplateMsg(Template templateEntity) {
         Map<String, String> variables = templateEntity.getVariables();
-        return templateMsgParser.replaceVarsAndGetMsg(templateEntity.getTemplate(), variables);
+        return templateMsgParser.replaceVarsAndGetMsg(templateEntity.getTemplateMsg(), variables);
     }
 
     private Template getTemplateEntityById(String id) throws TemplateNotFoundException {
