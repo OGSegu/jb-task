@@ -26,9 +26,10 @@ public class TemplateController {
     private TemplateSenderService templateSenderService;
 
     @PostMapping("/load")
-    public void load(@RequestBody TemplateDTO template) {
+    public ResponseEntity<String> load(@RequestBody TemplateDTO template) {
         Template templateEntity = TemplateMapper.INSTANCE.toEntity(template);
         templateService.save(templateEntity);
+        return new ResponseEntity<>("Received", HttpStatus.OK);
     }
 
     @PostMapping("/send")

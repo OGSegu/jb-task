@@ -14,7 +14,6 @@ import template.repository.TemplateRepository;
 import java.util.List;
 import java.util.Map;
 
-
 @Slf4j
 @Data
 @AllArgsConstructor
@@ -48,7 +47,9 @@ public class TemplateSenderService {
     private void sendTemplate(Template template) {
         String templateMsg = getTemplateMsg(template);
         List<String> endpointList = template.getRecipients();
-        endpointList.forEach(endpoint -> restTemplate.postForObject(endpoint, templateMsg, String.class));
+        endpointList.forEach(
+                endpoint -> restTemplate.postForObject(endpoint, templateMsg, String.class)
+        );
     }
 
     private Template getTemplateEntityById(String id) throws TemplateNotFoundException {

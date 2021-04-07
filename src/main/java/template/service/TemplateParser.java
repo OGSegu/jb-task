@@ -9,7 +9,6 @@ import java.util.Map;
 @Component
 public class TemplateParser {
 
-
     public String replaceVarsAndGetMsg(String templateMsg, Map<String, String> variables) {
         final String variablePattern = "\\$.*\\$";
         String[] words = templateMsg.split(" ");
