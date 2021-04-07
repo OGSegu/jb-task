@@ -33,7 +33,7 @@ public class TemplateController {
 
     @PostMapping("/send")
     public void sendMessage(@RequestBody TemplateSenderDTO templateSender) throws TemplateNotFoundException {
-        log.info(templateSenderService.save(templateSender));
+        templateSenderService.save(templateSender);
     }
 
     @ExceptionHandler(TemplateNotFoundException.class)
