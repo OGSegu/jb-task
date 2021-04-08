@@ -20,23 +20,23 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 class TemplateControllerTest {
 
-    public static final String CONTENT_TYPE = "application/json";
-    // Repo
     @Autowired
     private TemplateRepository templateRepository;
 
     // URLS
     private static final String LOAD_TEMPLATE_URL = "http://localhost:8080/api/template/load";
     private static final String SEND_WITH_VARIABLES_URL = "http://localhost:8080/api/template/send";
+    private static final String ENDPOINT_FIRST = "http://localhost:8080/endpoint/first";
+    private static final String ENDPOINT_SECOND = "http://localhost:8080/endpoint/second";
 
+    // Strings
     private static final String WRONG_TEMPLATE_ID = "wrongTemplateId";
     private static final String TEMPLATE_ID = "internshipRequest";
     private static final String TEMPLATE_MSG = "Jetbrains Internship in $teamName$ team";
-    private static final String ENDPOINT_FIRST = "http://localhost:8080/endpoint/first";
-    private static final String ENDPOINT_SECOND = "http://localhost:8080/endpoint/second";
+    private static final String CONTENT_TYPE = "application/json";
 
     // Variables
     private static final String TEAM_NAME = "Analytics Platform";
