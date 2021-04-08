@@ -24,7 +24,7 @@ public class Template {
 
     private String templateMsg;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
             name = "templates_recipients",
             joinColumns = @JoinColumn(name = "template_id")
@@ -32,7 +32,7 @@ public class Template {
     @Column(name = "recipient")
     private final List<String> recipients = new ArrayList<>();
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
             name = "templates_variables",
             joinColumns = @JoinColumn(name = "template_id")
