@@ -13,7 +13,7 @@ import template.repository.TemplateRepository;
 @AllArgsConstructor
 @Service
 public class TemplateService {
-
+    private TemplateParser templateParser;
     private TemplateRepository templateRepository;
 
     public void save(Template template) {

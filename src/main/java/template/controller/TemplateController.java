@@ -36,8 +36,9 @@ public class TemplateController {
     }
 
     @PostMapping("/send")
-    public void sendMessage(@RequestBody TemplateSenderDTO templateSender) throws TemplateNotFoundException {
+    public ResponseEntity<String> sendMessage(@RequestBody TemplateSenderDTO templateSender) throws TemplateNotFoundException {
         templateSenderService.save(templateSender);
+        return new ResponseEntity<>("Received", HttpStatus.OK);
     }
 
     @ExceptionHandler(TemplateNotFoundException.class)
