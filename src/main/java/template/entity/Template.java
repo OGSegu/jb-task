@@ -6,10 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Data
 @AllArgsConstructor
@@ -40,4 +37,12 @@ public class Template {
     @MapKeyColumn(name = "variable")
     @Column(name = "variable_value")
     private final Map<String, String> variables = new HashMap<>();
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
+            name = "templates_messages_history",
+            joinColumns = @JoinColumn(name = "template_id")
+    )
+    @Column(name = "message")
+    private final Set<String> sentMessagesHistory = new HashSet<>();
 }

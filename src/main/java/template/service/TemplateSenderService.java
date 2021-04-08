@@ -3,24 +3,24 @@ package template.service;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.client.RestTemplate;
 import template.dto.TemplateSenderDTO;
 import template.entity.Template;
 import template.exception.TemplateNotFoundException;
 import template.repository.TemplateRepository;
 
-import java.util.List;
 import java.util.Map;
 
 @Slf4j
 @Data
 @AllArgsConstructor
+@EnableScheduling
 @Service
 public class TemplateSenderService {
 
-    private RestTemplate restTemplate;
+    private TemplateScheduleService templateScheduleService;
 
     private TemplateParser templateMsgParser;
     private TemplateRepository templateRepo;
@@ -29,8 +29,10 @@ public class TemplateSenderService {
         String id = templateSender.getTemplateId();
         Template template = getTemplateEntityById(id);
         addVariables(template.getVariables(), templateSender.getVariables());
+        String message = replaceVariablesInMsg(template);
+        addMsgToHistory(template, message);
         templateRepo.save(template);
-        sendTemplate(template);
+        templateScheduleService.execute(message, template.getRecipients());
     }
 
     private void addVariables(Map<String, String> entityVariableMap, Map.Entry<String, String>[] variables) {
@@ -39,17 +41,13 @@ public class TemplateSenderService {
         }
     }
 
-    private String getTemplateMsg(Template templateEntity) {
+    private String replaceVariablesInMsg(Template templateEntity) {
         Map<String, String> variables = templateEntity.getVariables();
         return templateMsgParser.replaceVarsAndGetMsg(templateEntity.getTemplateMsg(), variables);
     }
 
-    private void sendTemplate(Template template) {
-        String templateMsg = getTemplateMsg(template);
-        List<String> endpointList = template.getRecipients();
-        endpointList.forEach(
-                endpoint -> restTemplate.postForObject(endpoint, templateMsg, String.class)
-        );
+    public void addMsgToHistory(Template template, String message) {
+        template.getSentMessagesHistory().add(message);
     }
 
     private Template getTemplateEntityById(String id) throws TemplateNotFoundException {
