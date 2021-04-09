@@ -11,9 +11,6 @@ public interface TemplateMapper {
 
     TemplateMapper INSTANCE = Mappers.getMapper(TemplateMapper.class);
 
-    @Mapping(source = "templateMsg", target = "template")
-    TemplateDTO toDTO(Template template);
-
     @Mapping(source = "template", target = "templateMsg")
     @Mapping(target = "variables", ignore = true)
     Template toEntity(TemplateDTO templateDTO);
