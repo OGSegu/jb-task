@@ -6,7 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -27,16 +28,11 @@ public class Template {
             joinColumns = @JoinColumn(name = "template_id")
     )
     @Column(name = "recipient")
-    private final List<String> recipients = new ArrayList<>();
+    private final Set<String> recipients = new HashSet<>();
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(
-            name = "templates_variables",
-            joinColumns = @JoinColumn(name = "template_id")
-    )
-    @MapKeyColumn(name = "variable")
-    @Column(name = "variable_value")
-    private final Map<String, String> variables = new HashMap<>();
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "template_id")
+    private final Set<Variable> variables = new HashSet<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(

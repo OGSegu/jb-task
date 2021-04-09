@@ -15,6 +15,6 @@ public interface TemplateMapper {
     TemplateDTO toDTO(Template template);
 
     @Mapping(source = "template", target = "templateMsg")
+    @Mapping(target = "variables", ignore = true)
     Template toEntity(TemplateDTO templateDTO);
-
 }
