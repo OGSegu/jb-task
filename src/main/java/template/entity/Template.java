@@ -4,10 +4,12 @@ package template.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -23,22 +25,25 @@ public class Template {
     private String templateMsg;
 
     @ElementCollection(fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     @CollectionTable(
             name = "templates_recipients",
             joinColumns = @JoinColumn(name = "template_id")
     )
     @Column(name = "recipient")
-    private final Set<String> recipients = new HashSet<>();
+    private final List<String> recipients = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     @JoinColumn(name = "template_id")
-    private final Set<Variable> variables = new HashSet<>();
+    private final List<Variable> variables = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     @CollectionTable(
             name = "templates_messages_history",
             joinColumns = @JoinColumn(name = "template_id")
     )
     @Column(name = "message")
-    private final Set<String> sentMessagesHistory = new HashSet<>();
+    private final List<String> sentMessagesHistory = new ArrayList<>();
 }

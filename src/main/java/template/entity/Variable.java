@@ -1,13 +1,11 @@
 package template.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @IdClass(VariableId.class)
 @Table(name = "Variables")
@@ -23,11 +21,6 @@ public class Variable {
     private Class<?> type = String.class;
 
     private String value = "";
-
-    public Variable(String templateId, String name) {
-        this.templateId = templateId;
-        this.name = name;
-    }
 
     public Variable(String templateId, String name, Class<?> type) {
         this.templateId = templateId;

@@ -10,7 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import template.config.MainConfiguration;
 
 import javax.annotation.PostConstruct;
-import java.util.Set;
+import java.util.List;
 
 @Slf4j
 @Data
@@ -31,7 +31,7 @@ public class TemplateScheduleService {
         cronTrigger = new CronTrigger(mainConfiguration.getTemplateCron());
     }
 
-    public void execute(String message, Set<String> endpoints) {
+    public void execute(String message, List<String> endpoints) {
         endpoints.forEach(endpoint -> execute(message, endpoint));
         log.info("Message in execute: " + message);
     }

@@ -8,14 +8,15 @@ import org.springframework.stereotype.Service;
 import template.dto.TemplateDTO;
 import template.entity.Template;
 import template.entity.Variable;
+import template.exception.VariableTypeNotFoundException;
 import template.mapper.TemplateMapper;
 import template.model.ClassType;
 import template.repository.TemplateRepository;
 import template.repository.VariableRepository;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 @Slf4j
 @Data
@@ -34,19 +35,20 @@ public class TemplateService {
     }
 
     public void parseVariablesType(Template templateEntity, TemplateDTO templateDTO) {
-        Set<Variable> entityVariables = templateEntity.getVariables();
+        List<Variable> entityVariables = templateEntity.getVariables();
         Map.Entry<String, String>[] variablesType = templateDTO.getVariablesType();
         if (variablesType == null) {
             return;
         }
         Arrays.stream(variablesType).forEach((Map.Entry<String, String> entry) -> {
-            Variable variable = null;
+            Variable variable;
             try {
                 variable = new Variable(templateEntity.getTemplateId(),
                         entry.getKey(),
                         Class.forName(ClassType.valueOf(entry.getValue().toUpperCase()).getPath()));
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+            } catch (ClassNotFoundException | IllegalArgumentException e) {
+                log.info("Variable type has not been found");
+                throw new VariableTypeNotFoundException();
             }
             entityVariables.add(variable);
         });
