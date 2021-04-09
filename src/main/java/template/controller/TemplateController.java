@@ -36,7 +36,4 @@ public class TemplateController {
         templateSenderService.save(templateSender);
         return new ResponseEntity<>("Received", HttpStatus.OK);
     }
-
-
-
 }
