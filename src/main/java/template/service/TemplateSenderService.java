@@ -38,6 +38,7 @@ public class TemplateSenderService {
         templateScheduleService.execute(message, template.getRecipients());
     }
 
+    @SuppressWarnings("unchecked")
     private <V> void addVariables(Template template, Map.Entry<String, ?>[] variables) {
         for (Map.Entry<String, ?> receivedVariable : variables) {
             String receivedVariableName = receivedVariable.getKey();
