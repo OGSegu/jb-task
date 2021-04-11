@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import template.dto.TemplateSenderDTO;
 import template.entity.Template;
 import template.entity.Variable;
@@ -70,10 +69,5 @@ public class TemplateSenderService {
 
     private Template getTemplateEntityById(String id) throws TemplateNotFoundException {
         return templateRepo.findById(id).orElseThrow(TemplateNotFoundException::new);
-    }
-
-    @ExceptionHandler(TemplateNotFoundException.class)
-    public String templateError() {
-        return "Error";
     }
 }
